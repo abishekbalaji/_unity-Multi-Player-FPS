@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5f;
+    [SerializeField]
+    private float moveSensitivity = 3f;
     private PlayerMotor motor;
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,22 @@ public class PlayerController : MonoBehaviour
 
         //Applying movement
         motor.Move(_velocity);
+
+        //Rotation 3d Vectors (Turning around)
+
+        float _yRot = Input.GetAxisRaw("Mouse X");
+        Vector3 _rotation = new Vector3(0f, _yRot, 0f) * moveSensitivity;
+
+        //Apply player rotation
+        motor.Rotate(_rotation);
+
+        //Camera Rotation 3d Vectors (Turning around)
+
+        float _xRot = Input.GetAxisRaw("Mouse Y");
+        Vector3 _cameraRotation = new Vector3(_xRot, 0f, 0f) * moveSensitivity;
+
+        //Apply camera rotation
+        motor.RotateCamera(_cameraRotation);
 
     }
 }
